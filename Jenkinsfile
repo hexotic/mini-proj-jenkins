@@ -1,10 +1,5 @@
 pipeline {  
 
-    scripted {
-        def getBuildTag() {
-            return "${env.BUILD_TAG}"
-        }
-    }
     environment {
         IMAGE_NAME = "static-website"
         IMAGE_TAG = getBuildTag()

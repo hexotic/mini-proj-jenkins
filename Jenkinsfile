@@ -1,5 +1,10 @@
-pipeline {
+pipeline {  
 
+    scripted {
+        def getBuildTag() {
+            return "${env.BUILD_TAG}"
+        }
+    }
     environment {
         IMAGE_NAME = "static-website"
         IMAGE_TAG = getBuildTag()
@@ -7,10 +12,6 @@ pipeline {
         USERNAME = "clev42"
         EC2_STAGING_HOST = "18.212.32.135"
         EC2_PROD_HOST = "18.208.170.171"
-    }
-
-    def getBuildTag() {
-       return "${env.BUILD_TAG}"
     }
     
     agent none

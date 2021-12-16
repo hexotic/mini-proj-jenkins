@@ -2,13 +2,17 @@ pipeline {
 
     environment {
         IMAGE_NAME = "static-website"
-        IMAGE_TAG = "alpha-0.1"
+        IMAGE_TAG = getBuildTag()
         CONTAINER_NAME = "static-website"
         USERNAME = "clev42"
         EC2_STAGING_HOST = "18.212.32.135"
         EC2_PROD_HOST = "18.208.170.171"
     }
 
+    def getBuildTag() {
+       return "${env.BUILD_TAG}"
+    }
+    
     agent none
 
     stages{

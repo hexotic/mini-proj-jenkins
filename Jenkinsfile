@@ -39,7 +39,7 @@ pipeline {
            steps {
                script{
                    sh '''
-                       curl http://localhost:5000 | head -n 1 | grep -iq "200 OK"
+                       echo "curl http://localhost:5000 | head -n 1 | grep -iq "200 OK""
                    '''
                }
            }

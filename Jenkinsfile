@@ -62,17 +62,5 @@ pipeline {
                }
            }
        }
-
-       stage('Push image in staging and deploy it') {
-           agent none
-            when {
-                expression { GIT_BRANCH == 'origin/master' }
-            }
-            script{
-                   sh '''
-                       echo TODO
-                   '''
-            }
-       }
     }
 }

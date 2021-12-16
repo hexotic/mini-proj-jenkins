@@ -41,7 +41,7 @@ pipeline {
            steps {
                script{
                    sh '''
-                       echo "curl http://localhost:5000 | head -n 1 | grep -iq "200 OK""
+                       curl -s http://localhost:5000 | grep -iq dimension
                    '''
                }
            }

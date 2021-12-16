@@ -2,7 +2,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "static-website"
-        IMAGE_TAG = env.BUILD_TAG
+        IMAGE_TAG = "alpha-0.1"
         CONTAINER_NAME = "static-website"
         USERNAME = "clev42"
     }

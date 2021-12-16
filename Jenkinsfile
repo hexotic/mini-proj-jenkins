@@ -68,6 +68,11 @@ pipeline {
             when {
                 expression { GIT_BRANCH == 'origin/master' }
             }
+            script{
+                   sh '''
+                       echo TODO
+                   '''
+            }
        }
     }
 }

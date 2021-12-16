@@ -2,7 +2,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "static-website"
-        IMAGE_TAG = "v-1.0"
+        IMAGE_TAG = "${env.BUILD_TAG}"
         CONTAINER_NAME = "static-website"
         USERNAME = "clev42"
         EC2_STAGING_HOST = "18.212.32.135"

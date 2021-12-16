@@ -83,6 +83,23 @@ pipeline {
             }
             }
         }
-
+        stage('PROD Deploy app on EC2') {
+            agent any
+            when{
+                expression{ GIT_BRANCH == 'origin/master'}
+            }
+            steps{
+            withCredentials([sshUserPrivateKey(credentialsId: "ec2-deploy-web", keyFileVariable: 'keyfile', usernameVariable: 'NUSER')]) {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    script{
+                        sh'''
+                            ssh -o StrictHostKeyChecking=no -i ${keyfile} ${NUSER}@${EC2_PROD_HOST} docker rm --force $CONTAINER_NAME || true
+                            ssh -o StrictHostKeyChecking=no -i ${keyfile} ${NUSER}@${EC2_PROD_HOST} docker run --name $CONTAINER_NAME -d -p 5001:80 $USERNAME/$IMAGE_NAME:$IMAGE_TAG
+                        '''
+                    }
+                }
+            }
+            }
+        }
     }
 }

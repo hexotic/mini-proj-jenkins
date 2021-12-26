@@ -3,7 +3,7 @@ Static Website Example
 
 To be used with Cloud Academy labs.
 
-[![Build Status](http://54.90.53.94:8080/buildStatus/icon?job=static-website)](http://54.90.53.94:8080/job/static-website/)
+TODO [![Build Status](http://54.90.53.94:8080/buildStatus/icon?job=static-website)](http://54.90.53.94:8080/job/static-website/)
 
 License
 ----------------------

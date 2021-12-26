@@ -5,8 +5,7 @@ pipeline {
         IMAGE_TAG = "${env.BUILD_TAG}"
         CONTAINER_NAME = "static-website"
         USERNAME = "clev42"
-        EC2_STAGING_HOST = "18.212.32.135"
-        EC2_PROD_HOST = "18.208.170.171"
+        EC2_PROD_HOST = "3.82.172.180"
     }
     
     agent none

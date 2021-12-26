@@ -65,22 +65,18 @@ pipeline {
            }
        }
         
-        stage('STAGING Deploy app on EC2') {
+        stage('STAGING Deploy locally') {
             agent any
             when{
                 expression{ GIT_BRANCH == 'origin/master'}
             }
             steps{
-            withCredentials([sshUserPrivateKey(credentialsId: "ec2-deploy-web", keyFileVariable: 'keyfile', usernameVariable: 'NUSER')]) {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script{
                         sh'''
-                            ssh -o StrictHostKeyChecking=no -i ${keyfile} ${NUSER}@${EC2_STAGING_HOST} docker rm --force $CONTAINER_NAME || true
-                            ssh -o StrictHostKeyChecking=no -i ${keyfile} ${NUSER}@${EC2_STAGING_HOST} docker run --name $CONTAINER_NAME -d -p 5001:80 $USERNAME/$IMAGE_NAME:$IMAGE_TAG
+                            docker rm --force $CONTAINER_NAME || true
+                            docker run --name $CONTAINER_NAME -d -p 5001:80 $USERNAME/$IMAGE_NAME:$IMAGE_TAG
                         '''
                     }
-                }
-            }
             }
         }
         stage('PROD Deploy app on EC2') {
@@ -89,12 +85,9 @@ pipeline {
                 expression{ GIT_BRANCH == 'origin/master'}
             }
             steps{
-            withCredentials([sshUserPrivateKey(credentialsId: "ec2-deploy-web", keyFileVariable: 'keyfile', usernameVariable: 'NUSER')]) {
+            withCredentials([sshUserPrivateKey(credentialsId: "prod-key", keyFileVariable: 'keyfile', usernameVariable: 'NUSER')]) {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script{
-                        timeout(time: 15, unit: "MINUTES") {
-                                input message: 'Do you want to approve the deploy in production?', ok: 'Yes'
-                        }
                         sh'''
                             ssh -o StrictHostKeyChecking=no -i ${keyfile} ${NUSER}@${EC2_PROD_HOST} docker rm --force $CONTAINER_NAME || true
                             ssh -o StrictHostKeyChecking=no -i ${keyfile} ${NUSER}@${EC2_PROD_HOST} docker run --name $CONTAINER_NAME -d -p 5001:80 $USERNAME/$IMAGE_NAME:$IMAGE_TAG
